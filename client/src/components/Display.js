@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./Global.css";
 import { errorToast } from "./showToast";
 
-const Display = ({ contract, account }) => {
+const Display = ({ contract, account, setLoading }) => {
   const [data, setData] = useState("");
   const [otherAddress, setOtherAddress] = useState("");
 
@@ -10,14 +10,18 @@ const Display = ({ contract, account }) => {
     let snippetArray;
     console.log("otherAddress",otherAddress)
     try {
+      setLoading(true)
       if (otherAddress) {
         snippetArray = await contract.display(otherAddress);
         console.log(snippetArray);
+        setLoading(false)
       } else {
         snippetArray = await contract.display(account);
+        setLoading(false)
       }
     } catch (e) {
       console.log("Access Error", e);
+      setLoading(false)
       errorToast("You don't have access!")
       return;
     }

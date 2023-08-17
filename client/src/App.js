@@ -17,6 +17,7 @@ function App() {
   const [account, setAccount] = useState("");
   const [contract, setContract] = useState(null);
   const [provider, setProvider] = useState(null);
+  const [loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
 
   useEffect(() => {
@@ -72,6 +73,17 @@ function App() {
       </div> */}
       <div id="page">
         <Header />
+
+        { loading && <div className="loadingGif">
+          <div className="loadingio-spinner-double-ring-3nx0746bf3l">
+            <div className="ldio-7q0jl0uyd3">
+            <div></div>
+            <div></div>
+            <div><div></div></div>
+            <div><div></div></div>
+            </div>
+          </div>
+        </div> }
         
         <div id="main" className="site-main-desktop site-main-mobile">
           <section id="code" className="contact-section pt-page">
@@ -92,10 +104,14 @@ function App() {
                       <CodeSnippetForm
                         account={account}
                         provider={provider}
-                        contract={contract} />
+                        contract={contract}
+                        setLoading={setLoading} />
                     </TabPanel>
                     <TabPanel>
-                      <Display contract={contract} account={account} />
+                      <Display 
+                        contract={contract} 
+                        account={account}
+                        setLoading={setLoading} />
                     </TabPanel>
                   </Tabs>
                 </div>

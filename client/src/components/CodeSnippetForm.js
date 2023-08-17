@@ -1,15 +1,14 @@
 import { useState } from "react";
 import { toast } from 'react-toastify';
 import "./Global.css";
-import { errorToast } from "./showToast";
+import { errorToast, successToast } from "./showToast";
 import { EditorState } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
-const CodeSnippetForm = ({ contract, account, provider }) => {
+const CodeSnippetForm = ({ contract, account, provider, setLoading }) => {
   const [author, setAuthor] = useState("");
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-
 
   const onEditorStateChange = (editorState) => {
     setEditorState(editorState)
@@ -27,9 +26,16 @@ const CodeSnippetForm = ({ contract, account, provider }) => {
       return;
     }
     try {
-      await contract.add(account,author, editorState);
+      setLoading(true);
+      const tx = await contract.addCodeSnippet(account,author, editorState);
+      await tx.wait(1);
+      setLoading(false);
+      successToast('Code successfully Added to BlockChain!!')
+      setAuthor('')
+      setEditorState(EditorState.createEmpty())
     } catch (e) {
       console.log("ERROR", e);
+      setLoading(false);
       errorToast('Unable to upload code')
       return;
     }
@@ -50,13 +56,16 @@ const CodeSnippetForm = ({ contract, account, provider }) => {
             <span className="input">
               <Editor
                 editorState={editorState}
+                wrapperClassName="wrapper-class"
+  editorClassName="editor-class"
+  toolbarClassName="toolbar-class"
                 onEditorStateChange={onEditorStateChange}
               />
               {/* <label className="input__label" for="cf-code">Enter Your Code snippets *</label> */}
             </span>
           </div>
           <div className="col-md-12 text-center">
-            <button type="submit" id="cf-submit" name="send_code_snippets" className="btn-main" >Submit Code</button>
+            <button type="submit" name="send_code_snippets" className="btn-main" >Submit Code</button>
           </div>
         </div>
       </form>
