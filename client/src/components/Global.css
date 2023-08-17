@@ -190,3 +190,16 @@ input[type="text"]:focus {
     opacity: 1;
     visibility: visible;
 }
+
+.rdw-editor-main {
+    background: #fff;
+    height: 800px !important;
+    color: #000;
+}
+.rdw-dropdown-wrapper {
+    background: #fff;
+    color: #000 !important;
+}
+.rdw-editor-toolbar {
+    color: #000 !important;
+}
