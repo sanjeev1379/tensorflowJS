@@ -1,9 +1,10 @@
 import { useState } from "react";
 import "./Global.css";
+import draftToHtml from 'draftjs-to-html';
 import { errorToast } from "./showToast";
 
 const Display = ({ contract, account, setLoading }) => {
-  const [data, setData] = useState("");
+  const [codeSnippits, setCodeSnippits] = useState([]);
   const [otherAddress, setOtherAddress] = useState("");
 
   const getCodeSnippet = async () => {
@@ -28,8 +29,21 @@ const Display = ({ contract, account, setLoading }) => {
     const isEmpty = Object.keys(snippetArray).length === 0;
 
     if (!isEmpty) {
-      const strCodeSnippet = snippetArray.toString();
-      console.log(strCodeSnippet);
+      // console.log("snippetArray",snippetArray);
+      const listOfCodeSnippet = snippetArray.map((item, index)=> {
+        if(item.code && item.code != 'undefined' && item.code != undefined && item.code != "" ) {
+          const snippetCode = JSON.parse(item.code)
+            return (
+              <div className="col-md-12 mb-50" key={index}>
+                <h5 className="mb-20">Smart Contract by <b>{item.author}</b></h5>
+                <pre>
+                  <div dangerouslySetInnerHTML={{ __html: draftToHtml(snippetCode) }} />
+                </pre>
+              </div>
+            )
+        }
+    });
+    setCodeSnippits(listOfCodeSnippet);
       
     } else {
       errorToast("No Code Snippits Find for you!")
@@ -40,6 +54,7 @@ const Display = ({ contract, account, setLoading }) => {
     <>
       <div className="top">
         <div className="row">
+          {(codeSnippits && codeSnippits.length > 0) && codeSnippits}
           <div className="col-md-12 mb-50">
             <span className="input">
               <input className="input__field cf-otherAddress" type="text" id="otherAddress" name="otherAddress" onChange={(event)=> setOtherAddress(event.target.value)} />

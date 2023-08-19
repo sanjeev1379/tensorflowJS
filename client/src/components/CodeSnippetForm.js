@@ -2,7 +2,7 @@ import { useState } from "react";
 import { toast } from 'react-toastify';
 import "./Global.css";
 import { errorToast, successToast } from "./showToast";
-import { EditorState } from 'draft-js';
+import { EditorState, convertToRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
 import '../../node_modules/react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 
@@ -21,17 +21,20 @@ const CodeSnippetForm = ({ contract, account, provider, setLoading }) => {
       return;
     }
 
-    if(!editorState || editorState == "" || editorState == null) {
-      errorToast('Code is Required!')
+    if(!editorState.getCurrentContent().hasText()) {
+      errorToast('Code snippets is Required!')
       return;
     }
+    const editorCode = JSON.stringify(convertToRaw(editorState.getCurrentContent()))
+    console.log("editorCode Stringify",editorState.getCurrentContent().hasText());
+    // console.log("editorCode Parse",JSON.parse(editorCode));
     try {
       setLoading(true);
-      const tx = await contract.addCodeSnippet(account,author, editorState);
+      const tx = await contract.addCodeSnippet(account,author, editorCode);
       await tx.wait(1);
       setLoading(false);
       successToast('Code successfully Added to BlockChain!!')
-      setAuthor('')
+      setAuthor("")
       setEditorState(EditorState.createEmpty())
     } catch (e) {
       console.log("ERROR", e);
@@ -47,7 +50,7 @@ const CodeSnippetForm = ({ contract, account, provider, setLoading }) => {
         <div className="row">
           <div className="col-md-12 mb-50">
             <span className="input">
-              <input className="input__field cf-validate" type="text" id="author" name="author" onChange={(event)=> setAuthor(event.target.value)} />
+              <input className="input__field cf-validate" type="text" id="author" name="author" value={author} onChange={(event)=> setAuthor(event.target.value)} />
               <label className="input__label" for="cf-name">Author *</label>
             </span>
           </div>
@@ -57,11 +60,11 @@ const CodeSnippetForm = ({ contract, account, provider, setLoading }) => {
               <Editor
                 editorState={editorState}
                 wrapperClassName="wrapper-class"
-  editorClassName="editor-class"
-  toolbarClassName="toolbar-class"
+                editorClassName="editor-class"
+                toolbarClassName="toolbar-class"
                 onEditorStateChange={onEditorStateChange}
               />
-              {/* <label className="input__label" for="cf-code">Enter Your Code snippets *</label> */}
+              <label className="input__label" for="cf-code">Enter Your Code snippets *</label>
             </span>
           </div>
           <div className="col-md-12 text-center">

@@ -90,6 +90,7 @@ function App() {
             <div className="section-container">
               <div className="page-heading">
                 <h2>Code snippets.</h2>
+                <span className="icon__acount"><b>{account}</b></span>
               </div>
 
               <div className="row mb-70">
