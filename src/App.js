@@ -1,13 +1,13 @@
 import GestureRecognition from "./components/GestureRecognition";
 import FacialLandmarkDetection from "./components/FacialLandmarkDetection";
+import PosenetDetection from "./components/PosenetDetection";
+import RealTimeObjectDetection from "./components/RealTimeObjectDetection";
 import "./components/Global.css";
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import Header from "./components/Header";
-import PosenetDetection from "./components/PosenetDetection";
-import RealTimeObjectDetection from "./components/RealTimeObjectDetection";
 
 
 function App() {
