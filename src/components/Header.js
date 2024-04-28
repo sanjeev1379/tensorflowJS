@@ -34,7 +34,10 @@ const Header = () => {
                     <a href="https://sanjeevkumar.web.app/#projects" className="pt-link"><span className="nav-menu-icon"><i className="lnr lnr-book"></i></span>Projects</a>
                   </li>
                   <li>
-                    <a href="#code" className="pt-link active"><span className="nav-menu-icon"><i className="lnr lnr-code"></i></span>Code snippets</a>
+                    <a href="https://web3-sanjeevkumar.web.app/#code" className="pt-link"><span className="nav-menu-icon"><i className="lnr lnr-code"></i></span>Code snippets</a>
+                  </li>
+                  <li>
+                    <a href="#tensorflow" className="pt-link active"><span className="nav-menu-icon"><i className="lnr lnr-sync"></i></span>Live TensorFlow</a>
                   </li>
                   <li>
                     <a href="https://sanjeevkumar.web.app/#contact" className="pt-link"><span className="nav-menu-icon"><i className="lnr lnr-envelope"></i></span>Contact</a>
