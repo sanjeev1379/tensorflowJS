@@ -8,6 +8,7 @@ import { drawHand } from "./utilities";
 import * as fp from "fingerpose";
 import victory from "./victory.png";
 import thumbs_up from "./thumbs_up.png";
+import {isMobile} from 'react-device-detect';
 
 function GestureRecognition() {
   const webcamRef = useRef(null);
@@ -20,7 +21,7 @@ function GestureRecognition() {
     const net = await handpose.load();
     setInterval(() => {
       detect(net);
-    }, 100);
+    }, 10);
   };
 
   const detect = async (net) => {
@@ -70,7 +71,19 @@ function GestureRecognition() {
     <div className="gesture-recognition">
       <Webcam
         ref={webcamRef}
-        style={{
+        style={isMobile ? {
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          borderRadius: 12,
+          zindex: 9,
+          width: 380,
+          height: 520,
+          objectFit: 'cover',
+        } : {
           position: "absolute",
           marginLeft: "auto",
           marginRight: "auto",
@@ -87,7 +100,19 @@ function GestureRecognition() {
 
       <canvas
         ref={canvasRef}
-        style={{
+        style={isMobile ? {
+          position: "relative",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          borderRadius: 12,
+          zindex: 9,
+          width: 380,
+          height: 520,
+          objectFit: 'cover',
+        } : {
           position: "absolute",
           marginLeft: "auto",
           marginRight: "auto",

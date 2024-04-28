@@ -8,6 +8,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as facemesh from "@tensorflow-models/face-landmarks-detection";
 import Webcam from "react-webcam";
 import { drawMesh } from "./utilities";
+import {isMobile} from 'react-device-detect';
 
 function FacialLandmarkDetection() {
   const webcamRef = useRef(null);
@@ -61,33 +62,57 @@ function FacialLandmarkDetection() {
     <div className="App">
       <header className="App-header">
         <Webcam
-          ref={webcamRef}
-          style={{
-            position: "absolute",
-            marginLeft: "auto",
-            marginRight: "auto",
-            left: 0,
-            right: 0,
-            textAlign: "center",
-            zindex: 9,
-            borderRadius: 12,
-            width: 1020,
-            height: 520,
-            objectFit: 'cover',
-          }}
+        ref={webcamRef}
+        style={isMobile ? {
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          borderRadius: 12,
+          zindex: 9,
+          width: 380,
+          height: 520,
+          objectFit: 'cover',
+        } : {
+          position: "absolute",
+          marginLeft: "auto",
+          marginRight: "auto",
+          left: 0,
+          right: 0,
+          textAlign: "center",
+          borderRadius: 12,
+          zindex: 9,
+          width: 1020,
+          height: 520,
+          objectFit: 'cover',
+        }}
         />
 
         <canvas
           ref={canvasRef}
-          style={{
+          style={isMobile ? {
+            position: "relative",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            borderRadius: 12,
+            zindex: 9,
+            width: 380,
+            height: 520,
+            objectFit: 'cover',
+          } : {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 9,
             borderRadius: 12,
+            zindex: 9,
             width: 1020,
             height: 520,
             objectFit: 'cover',

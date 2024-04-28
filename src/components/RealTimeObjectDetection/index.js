@@ -5,6 +5,7 @@ import * as cocossd from "@tensorflow-models/coco-ssd";
 import Webcam from "react-webcam";
 import "../Global.css";
 import { drawRect } from "./utilities";
+import {isMobile} from 'react-device-detect';
 
 function RealTimeObjectDetection() {
   const webcamRef = useRef(null);
@@ -13,7 +14,6 @@ function RealTimeObjectDetection() {
   // Main function
   const runCoco = async () => {
     const net = await cocossd.load();
-    console.log("Handpose model loaded.");
     //  Loop and detect hands
     setInterval(() => {
       detect(net);
@@ -56,16 +56,28 @@ function RealTimeObjectDetection() {
       <header className="App-header">
         <Webcam
           ref={webcamRef}
-          muted={true} 
-          style={{
+          muted={true}
+          style={isMobile ? {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 9,
             borderRadius: 12,
+            zindex: 9,
+            width: 380,
+            height: 520,
+            objectFit: 'cover',
+          } : {
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            borderRadius: 12,
+            zindex: 9,
             width: 1020,
             height: 520,
             objectFit: 'cover',
@@ -74,15 +86,27 @@ function RealTimeObjectDetection() {
 
         <canvas
           ref={canvasRef}
-          style={{
+          style={isMobile ? {
+            position: "relative",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            borderRadius: 12,
+            zindex: 9,
+            width: 380,
+            height: 520,
+            objectFit: 'cover',
+          } : {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 8,
             borderRadius: 12,
+            zindex: 9,
             width: 1020,
             height: 520,
             objectFit: 'cover',

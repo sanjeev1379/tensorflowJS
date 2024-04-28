@@ -4,6 +4,7 @@ import * as tf from "@tensorflow/tfjs";
 import * as posenet from "@tensorflow-models/posenet";
 import Webcam from "react-webcam";
 import { drawKeypoints, drawSkeleton } from "./utilities";
+import {isMobile} from 'react-device-detect';
 
 function PosenetDetection() {
   const webcamRef = useRef(null);
@@ -16,7 +17,7 @@ function PosenetDetection() {
     });
     setInterval(() => {
       detect(net);
-    }, 100);
+    }, 10);
   };
 
   const detect = async (net) => {
@@ -55,15 +56,27 @@ function PosenetDetection() {
       <header className="App-header">
         <Webcam
           ref={webcamRef}
-          style={{
+          style={isMobile ? {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 9,
             borderRadius: 12,
+            zindex: 9,
+            width: 380,
+            height: 520,
+            objectFit: 'cover',
+          } : {
+            position: "absolute",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            borderRadius: 12,
+            zindex: 9,
             width: 1020,
             height: 520,
             objectFit: 'cover',
@@ -72,15 +85,27 @@ function PosenetDetection() {
 
         <canvas
           ref={canvasRef}
-          style={{
+          style={isMobile ? {
+            position: "relative",
+            marginLeft: "auto",
+            marginRight: "auto",
+            left: 0,
+            right: 0,
+            textAlign: "center",
+            borderRadius: 12,
+            zindex: 9,
+            width: 380,
+            height: 520,
+            objectFit: 'cover',
+          } : {
             position: "absolute",
             marginLeft: "auto",
             marginRight: "auto",
             left: 0,
             right: 0,
             textAlign: "center",
-            zindex: 9,
             borderRadius: 12,
+            zindex: 9,
             width: 1020,
             height: 520,
             objectFit: 'cover',

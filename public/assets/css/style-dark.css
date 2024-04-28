@@ -706,7 +706,7 @@ header .header-mobile {
     transform: translateX(-50%);
     display: inline-block;
     color: #fff;
-    font-size: 24px;
+    font-size: 24px !important;
     text-transform: uppercase;
     line-height: 50px;
     white-space: nowrap; }
